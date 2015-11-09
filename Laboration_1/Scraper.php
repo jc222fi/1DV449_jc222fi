@@ -1,4 +1,5 @@
 <?php
+//ini_set('display_errors', 'Off');
 
 $url = $_POST['source'];
 $data = curl_get_request($url);
@@ -6,8 +7,103 @@ $data = curl_get_request($url);
 $dom = new DOMDocument();
 
 if($dom->loadHTML($data)){
-    $newUrls = get_list($dom, $url);
-    var_dump($newUrls);
+    $newUrls = get_url_list($dom, $url);
+    foreach($newUrls as $url){
+        $dataSets = array();
+        $url = $url . "/";
+        array_push($dataSets, curl_get_request($url));
+        echo $url . "<br />";
+        if($url == ($newUrls[0] . "/")){
+            if($dom->loadHTML($dataSets[0])){
+                $calendars = get_url_list($dom, $url);
+                foreach($calendars as $calendar){
+                    if (preg_match('/paul/', $calendar)) {
+                        $paul = curl_get_request($calendar);
+                        if($dom->loadHTML($paul)){
+                            $days = $dom->getElementsByTagName('th');
+                            $status = $dom->getElementsByTagName('td');
+                            $paulsAvailableDays = array();
+                            $count = 0;
+                            foreach($status as $item){
+                                if(preg_match('/ok/i', $item->nodeValue)){
+                                    array_push($paulsAvailableDays, $days[$count]->nodeValue);
+                                }
+                                $count++;
+                            }
+
+                        }
+                        else{
+                            die("Something went wrong");
+                        }
+                    }
+                    else if (preg_match('/peter/', $calendar)) {
+                        $peter = curl_get_request($calendar);
+                        if($dom->loadHTML($peter)){
+                            $days = $dom->getElementsByTagName('th');
+                            $status = $dom->getElementsByTagName('td');
+                            $petersAvailableDays = array();
+                            $count = 0;
+                            foreach($status as $item){
+                                if(preg_match('/ok/i', $item->nodeValue)){
+                                    array_push($petersAvailableDays, $days[$count]->nodeValue);
+                                }
+                                $count++;
+                            }
+                        }
+                        else{
+                            die("Something went wrong");
+                        }
+                    }
+                    else if (preg_match('/mary/', $calendar)) {
+                        $mary = curl_get_request($calendar);
+                        if($dom->loadHTML($mary)){
+                            $days = $dom->getElementsByTagName('th');
+                            $status = $dom->getElementsByTagName('td');
+                            $marysAvailableDays = array();
+                            $count = 0;
+                            foreach($status as $item){
+                                if(preg_match('/ok/i', $item->nodeValue)){
+                                    array_push($marysAvailableDays, $days[$count]->nodeValue);
+                                }
+                                $count++;
+                            }
+                        }
+                        else{
+                            die("Something went wrong");
+                        }
+                    }
+                    else{
+                        echo "Couldn't match calendars";
+                    }
+                }
+                print_r($paulsAvailableDays);
+            }
+            else{
+                die("Something went wrong");
+            }
+        }
+    }
+    /*
+    $count = 0;
+    foreach($dataSets as $dataSet){
+        if($dom->loadHTML($dataSet)){
+            $moreUrls = get_url_list($dom, $newUrls[$count]);
+            $innerCount = 0;
+            foreach($moreUrls as $url){
+                $dataSets2[$innerCount] = curl_get_request($url);
+                echo $url . "<br />";
+                $innerCount++;
+            }
+            foreach($dataSets2 as $dataSet2){
+                echo $dataSet2 . "<br />";
+            }
+        }
+        else{
+            die("Something went wrong");
+        }
+        $count++;
+    }*/
+
     /*foreach($dataSets as $dataSet){
         if($dom->loadHTML($dataSet)){
             $links = $dom->getElementsByTagName('a');
@@ -22,8 +118,8 @@ if($dom->loadHTML($data)){
         else{
             die("Something went wrong");
         }
-    }*/
-    /*foreach($newUrls as $newUrl){
+    }
+    foreach($newUrls as $newUrl){
         $data = curl_get_request($newUrl);
         if($dom->loadHTML($data)){
             $links = $dom->getElementsByTagName('a');
@@ -52,13 +148,14 @@ if($dom->loadHTML($data)){
 else {
     die("Something went wrong");
 }
-function get_list(\DOMDocument $dom, $url){
+function get_url_list(\DOMDocument $dom, $url){
     $links = $dom->getElementsByTagName('a');
     $count = 0;
+    $newUrls = array();
     foreach($links as $link){
         $result = $link->getAttribute('href');
         $urlExtension = preg_replace('/\//', '', $result);
-        $newUrls[$count] = $url . $urlExtension . "/";
+        $newUrls[$count] = $url . $urlExtension;
         $count++;
     }
     return $newUrls;
