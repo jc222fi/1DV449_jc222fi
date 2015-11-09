@@ -8,14 +8,22 @@ $dom = new DOMDocument();
 
 if($dom->loadHTML($data)){
     $newUrls = get_url_list($dom, $url);
+    $dataSets = array();
+    $availableDayInCommon = '';
+    $weekDaysSwedish[0] = '/fredag/i';
+    $weekDaysSwedish[1] = '/lördag/i';
+    $weekDaysSwedish[2] = '/söndag/i';
+    $weekDaysEnglish[0] = 'Friday';
+    $weekDaysEnglish[1] = 'Saturday';
+    $weekDaysEnglish[2] = 'Sunday';
+
     foreach($newUrls as $url){
-        $dataSets = array();
-        $url = $url . "/";
-        array_push($dataSets, curl_get_request($url));
+        $getRequest = curl_get_request($url . "/");
+        array_push($dataSets, $getRequest);
         echo $url . "<br />";
-        if($url == ($newUrls[0] . "/")){
+        if($url == ($newUrls[0])){
             if($dom->loadHTML($dataSets[0])){
-                $calendars = get_url_list($dom, $url);
+                $calendars = get_url_list($dom, $url . "/");
                 foreach($calendars as $calendar){
                     if (preg_match('/paul/', $calendar)) {
                         $paul = curl_get_request($calendar);
@@ -48,18 +56,36 @@ if($dom->loadHTML($data)){
                         echo "Couldn't match calendars";
                     }
                 }
-                $availableDaysInCommon = array();
                 foreach($paulsAvailableDays as $day){
                     foreach($petersAvailableDays as $petersDay){
                         if($day == $petersDay){
                             foreach($marysAvailableDays as $marysDay){
                                 if($day == $marysDay){
-                                    array_push($availableDaysInCommon, $day);
+                                    $availableDayInCommon = $day;
                                 }
                             }
                         }
                     }
                 }
+                echo $availableDayInCommon . "<br />";
+            }
+            else{
+                die("Something went wrong");
+            }
+        }
+        else if($url == ($newUrls[1])){
+            if($dom->loadHTML($dataSets[1])){
+                $items = $dom->getElementsByTagName('option');
+                $translatedDays = array();
+                foreach($items as $item){
+                    //echo $item->nodeValue . "<br />";
+                    if (preg_match('/fredag/i', $item->nodeValue) || preg_match('/lördag/i', $item->nodeValue) || preg_match('/söndag/i', $item->nodeValue)) {
+                        $day = $item->nodeValue;
+                        echo $day . "<br />";
+                        //array_push($translatedDays, preg_replace($weekDaysSwedish, $weekDaysEnglish, $day->nodeValue));
+                    }
+                }
+                var_dump($translatedDays);
             }
             else{
                 die("Something went wrong");
