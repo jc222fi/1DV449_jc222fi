@@ -20,17 +20,7 @@ if($dom->loadHTML($data)){
                     if (preg_match('/paul/', $calendar)) {
                         $paul = curl_get_request($calendar);
                         if($dom->loadHTML($paul)){
-                            $days = $dom->getElementsByTagName('th');
-                            $status = $dom->getElementsByTagName('td');
-                            $paulsAvailableDays = array();
-                            $count = 0;
-                            foreach($status as $item){
-                                if(preg_match('/ok/i', $item->nodeValue)){
-                                    array_push($paulsAvailableDays, $days[$count]->nodeValue);
-                                }
-                                $count++;
-                            }
-
+                            $paulsAvailableDays = find_available_days($dom);
                         }
                         else{
                             die("Something went wrong");
@@ -39,16 +29,7 @@ if($dom->loadHTML($data)){
                     else if (preg_match('/peter/', $calendar)) {
                         $peter = curl_get_request($calendar);
                         if($dom->loadHTML($peter)){
-                            $days = $dom->getElementsByTagName('th');
-                            $status = $dom->getElementsByTagName('td');
-                            $petersAvailableDays = array();
-                            $count = 0;
-                            foreach($status as $item){
-                                if(preg_match('/ok/i', $item->nodeValue)){
-                                    array_push($petersAvailableDays, $days[$count]->nodeValue);
-                                }
-                                $count++;
-                            }
+                            $petersAvailableDays = find_available_days($dom);
                         }
                         else{
                             die("Something went wrong");
@@ -57,16 +38,7 @@ if($dom->loadHTML($data)){
                     else if (preg_match('/mary/', $calendar)) {
                         $mary = curl_get_request($calendar);
                         if($dom->loadHTML($mary)){
-                            $days = $dom->getElementsByTagName('th');
-                            $status = $dom->getElementsByTagName('td');
-                            $marysAvailableDays = array();
-                            $count = 0;
-                            foreach($status as $item){
-                                if(preg_match('/ok/i', $item->nodeValue)){
-                                    array_push($marysAvailableDays, $days[$count]->nodeValue);
-                                }
-                                $count++;
-                            }
+                            $marysAvailableDays = find_available_days($dom);
                         }
                         else{
                             die("Something went wrong");
@@ -76,7 +48,18 @@ if($dom->loadHTML($data)){
                         echo "Couldn't match calendars";
                     }
                 }
-                print_r($paulsAvailableDays);
+                $availableDaysInCommon = array();
+                foreach($paulsAvailableDays as $day){
+                    foreach($petersAvailableDays as $petersDay){
+                        if($day == $petersDay){
+                            foreach($marysAvailableDays as $marysDay){
+                                if($day == $marysDay){
+                                    array_push($availableDaysInCommon, $day);
+                                }
+                            }
+                        }
+                    }
+                }
             }
             else{
                 die("Something went wrong");
@@ -147,6 +130,19 @@ if($dom->loadHTML($data)){
 }
 else {
     die("Something went wrong");
+}
+function find_available_days(\DOMDocument $dom){
+    $days = $dom->getElementsByTagName('th');
+    $status = $dom->getElementsByTagName('td');
+    $availableDays = array();
+    $count = 0;
+    foreach($status as $item){
+        if(preg_match('/ok/i', $item->nodeValue)){
+            array_push($availableDays, $days[$count]->nodeValue);
+        }
+        $count++;
+    }
+    return $availableDays;
 }
 function get_url_list(\DOMDocument $dom, $url){
     $links = $dom->getElementsByTagName('a');
