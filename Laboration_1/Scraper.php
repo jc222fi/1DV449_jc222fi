@@ -10,12 +10,12 @@ if($dom->loadHTML($data)){
     $newUrls = get_url_list($dom, $url);
     $dataSets = array();
     $availableDayInCommon = '';
-    $weekDaysSwedish[0] = '/fredag/i';
-    $weekDaysSwedish[1] = '/lördag/i';
-    $weekDaysSwedish[2] = '/söndag/i';
-    $weekDaysEnglish[0] = 'Friday';
-    $weekDaysEnglish[1] = 'Saturday';
-    $weekDaysEnglish[2] = 'Sunday';
+    $weekDaysIndex[0] = '01';
+    $weekDaysIndex[1] = '02';
+    $weekDaysIndex[2] = '03';
+    $weekDaysEnglish[0] = '/friday/i';
+    $weekDaysEnglish[1] = '/saturday/i';
+    $weekDaysEnglish[2] = '/sunday/i';
 
     foreach($newUrls as $url){
         $getRequest = curl_get_request($url . "/");
@@ -67,6 +67,7 @@ if($dom->loadHTML($data)){
                         }
                     }
                 }
+                $availableDayInCommon = preg_replace($weekDaysEnglish, $weekDaysIndex, $availableDayInCommon);
                 echo $availableDayInCommon . "<br />";
             }
             else{
@@ -75,20 +76,29 @@ if($dom->loadHTML($data)){
         }
         else if($url == ($newUrls[1])){
             if($dom->loadHTML($dataSets[1])){
-                $items = $dom->getElementsByTagName('option');
+                $xpath = new DOMXPath($dom);
+                $items = $xpath->query('//select[@id = "day"]/option');
+                foreach($items as $item){
+                    $itemValue = $item->getAttribute('value');
+                    if($itemValue == $availableDayInCommon){
+                        echo "found";
+                    }
+                }
+
+                /*$items = $dom->getElementsByTagName('option');
+
                 $translatedDays = array();
                 foreach($items as $item){
-                    //echo $item->nodeValue . "<br />";
+                    $itemValue = $item->getAttribute('value');
+                    echo $itemValue . "<br />";
                     if (preg_match('/fredag/i', $item->nodeValue) || preg_match('/lördag/i', $item->nodeValue) || preg_match('/söndag/i', $item->nodeValue)) {
-                        $day = $item->nodeValue;
-                        echo $day . "<br />";
                         //array_push($translatedDays, preg_replace($weekDaysSwedish, $weekDaysEnglish, $day->nodeValue));
                     }
                 }
                 var_dump($translatedDays);
             }
             else{
-                die("Something went wrong");
+                die("Something went wrong");*/
             }
         }
     }
