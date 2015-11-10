@@ -77,14 +77,40 @@ if($dom->loadHTML($data)){
         else if($url == ($newUrls[1])){
             if($dom->loadHTML($dataSets[1])){
                 $xpath = new DOMXPath($dom);
-                $items = $xpath->query('//select[@id = "day"]/option');
-                foreach($items as $item){
+                $dayItems = $xpath->query('//select[@id = "day"]/option');
+                foreach($dayItems as $item){
                     $itemValue = $item->getAttribute('value');
                     if($itemValue == $availableDayInCommon){
-                        echo "found";
+                        echo $availableMovieDay = $itemValue;
                     }
                 }
+                $moviesOnDay = array();
+                $movieItems = $xpath->query('//select[@id = "movie"]/option');
+                foreach($movieItems as $item){
+                    $itemValue = $item->getAttribute('value');
+                    $checkMovieUrl = $newUrls[1] . "/check?day=" . $availableMovieDay . "&movie=" .$itemValue;
+                    $getRequest = curl_get_request($checkMovieUrl);
+                    array_push($moviesOnDay, $getRequest);
+                    $availableTimeForMovie = array();
+                    foreach($moviesOnDay as $movie){
+                        if("status" == 1){
+                            echo "found";
+                            array_push($availableTimeForMovie, $movie);
+                        }
+                    }
+                }
+                /*$moviesOnDay = array();
+                foreach($checkMovieUrl as $movieUrl){
+                    if($dom->loadHTML($getRequest)){
+                        $times = $xpath->query('//div[@id = "message"]');
+                        foreach ($times as $time) {
+                            var_dump($time->nodeValue);
+                        }
+                    }
+                }*/
 
+
+                //$checkMovieUrl = $newUrls[1] . "check?day=" . $availableMovieDay . "movie=" .$itemValue;
                 /*$items = $dom->getElementsByTagName('option');
 
                 $translatedDays = array();
