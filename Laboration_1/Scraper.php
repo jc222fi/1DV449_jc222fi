@@ -84,21 +84,42 @@ if($dom->loadHTML($data)){
                         echo $availableMovieDay = $itemValue;
                     }
                 }
-                $moviesOnDay = array();
+                $jsonObjects = array();
                 $movieItems = $xpath->query('//select[@id = "movie"]/option');
                 foreach($movieItems as $item){
                     $itemValue = $item->getAttribute('value');
                     $checkMovieUrl = $newUrls[1] . "/check?day=" . $availableMovieDay . "&movie=" .$itemValue;
                     $getRequest = curl_get_request($checkMovieUrl);
-                    array_push($moviesOnDay, $getRequest);
-                    $availableTimeForMovie = array();
-                    foreach($moviesOnDay as $movie){
-                        if("status" == 1){
-                            echo "found";
-                            array_push($availableTimeForMovie, $movie);
+                    $jsonObject = json_decode($getRequest, true);
+                    array_push($jsonObjects, $jsonObject);
+                }
+                $movieOptions = array();
+                $notFullyBooked = array();
+                foreach($jsonObjects as $objects){
+                    foreach($objects as $objectValue){
+                        if($objectValue["status"] == 1){
+                            $notFullyBooked["movie"] = $objectValue["movie"];
+                            $notFullyBooked["time"] = $objectValue["time"];
+                            array_push($movieOptions, $notFullyBooked);
                         }
                     }
                 }
+                /*$jsonObjects = array();
+                foreach($moviesOnDay as $movie){
+                    $jsonObject = json_decode($movie, true);
+                    var_dump($jsonObject);
+                    echo "<br/>";
+                    array_push($jsonObjects, $jsonObject);
+
+                    //echo $movie["status"];
+                    if($movie['status'] == 1){
+                        echo $movie['time'];
+                    }
+                }
+                foreach($movieAttributes as $movieAttribute){
+                    var_dump($movieAttribute);
+                    echo "<br/>";
+                }*/
                 /*$moviesOnDay = array();
                 foreach($checkMovieUrl as $movieUrl){
                     if($dom->loadHTML($getRequest)){
