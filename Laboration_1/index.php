@@ -2,6 +2,7 @@
 
 session_start();
 
+//Starting page
 echo "<!DOCTYPE html>
       <html>
         <head>
