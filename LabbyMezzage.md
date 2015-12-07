@@ -4,6 +4,7 @@
 * [Cross-Site Scripting (XSS)](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#cross-site-scripting-xss),
 * [Avsaknad av funktionella nivåer med åtkomstkontroll](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#avsaknad-av-funktionella-nivåer-med-åtkomstkontroll)
 * [Cross-Site Request Forgery (CSRF)](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#cross-site-request-forgery-csrf)  
+
 ### Prestandaproblem 
 * [Inlänkning](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#inlänkning)
 * [Inline](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#inline)
