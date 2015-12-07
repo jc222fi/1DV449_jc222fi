@@ -1,4 +1,13 @@
 # Labby Mezzage
+### Säkerhetsbrister 
+* [Injections](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#injections)
+* [Cross-Site Scripting (XSS)](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#cross-site-scripting-xss),
+* [Avsaknad av funktionella nivåer med åtkomstkontroll](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#avsaknad-av-funktionella-nivåer-med-åtkomstkontroll)
+* [Cross-Site Request Forgery (CSRF)](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#cross-site-request-forgery-csrf)
+### Prestandaproblem 
+* [Inlänkning](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#inlänkning)
+* [Inline](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#inline)
+* [Egna övergripande reflektioner](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#egna-övergripande-reflektioner)
 ### Potentiella säkerhetsbrister och prestandaproblem
 Skriven av Johanna Larsson Cornejo (jc222fi) för kursen 1DV449 - Webbteknik II
 
