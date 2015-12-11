@@ -13,27 +13,72 @@
 // });
 var ApiResponse = {
     init: function() {
-    var xhttp = new XMLHttpRequest();
-    var url = "http://api.sr.se/api/v2/traffic/messages";
-    
-    xhttp.onreadystatechange = function() {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
-            var myArray = JSON.parse(xhttp.responseText);
-            alert(myArray);
-            ApiResponse.handleResponse(myArray);
-        }
-    };
-    xhttp.open("GET", url, true);
-    xhttp.send();
+        $.ajax({
+            type: 'GET',
+            url: "http://api.sr.se/api/v2/traffic/messages",
+            dataType: "json",
+            complete: function(data){
+                var parsedObj = JSON.parse(JSON.stringify(data));
+                var xmlData = parsedObj.responseText;
+                console.log(xmlData);
+                ApiResponse.handleResponse(xmlData);
+                /*var messages = $(xmlData).find("messages").each(function(i){
+                    titles[i] = $(this).find("title").text();
+                });*/
+                //console.log(messages);
+            }
+        });
+
+
+
+        /*$.getJSON("http://api.sr.se/api/v2/traffic/messages", function(data){
+            var items = [];
+            $.each(data, function(key, val){
+                items.push( "<li id='" + key + "'>" + val + "</li>" );
+            });
+            $( "<ul/>", {
+                "class": "my-new-list",
+                html: items.join( "" )
+            }).appendTo( "body" );
+        });*/
+
+
+    //var xhttp = new XMLHttpRequest();
+    //var url = "http://api.sr.se/api/v2/traffic/messages";
+    //
+    //xhttp.onreadystatechange = function() {
+    //    if (xhttp.readyState == 4 && xhttp.status == 200) {
+    //        var myArray = JSON.parse(xhttp.responseText);
+    //        alert(myArray);
+    //        ApiResponse.handleResponse(myArray);
+    //    }
+    //};
+    //xhttp.open("GET", url, true);
+    //xhttp.send();
     },
-    handleResponse: function(array){
-         var i;
-         var object = "";
-         for(i = 0; i < array.length; i++) {
-             object += "working";
-            //object.push(array[i].title);
-            //arr[i].display + '</a><br>';
-        }
+    handleResponse: function(xml){
+
+        $(xml).find('message').each(function(){
+            //var $messages = $(this);
+            var $message = $(this);
+            var title = $message.children('title');
+            var priority = $message.attr('priority');
+            var subCategory = $message.children('subcategory');
+            var description = $message.children('description');
+            console.log(title);
+
+            var html = '<h3>' + title.text() + '</h3>       <p>' + priority + ' ' + subCategory.text() + '</p><p>' + description.text() + '</p>';
+            //html += '';
+
+            $('#output').append(html);
+        });
+        // var i;
+        // var object = "";
+        // for(i = 0; i < array.length; i++) {
+        //     object += "working";
+        //    //object.push(array[i].title);
+        //    //arr[i].display + '</a><br>';
+        //}
         // object += "";
         // var x = xmlDoc.getElementsByTagName("subcategory");
         // for(i = 0; i<x.length;i++){
@@ -41,7 +86,7 @@ var ApiResponse = {
         // }
         
         
-        document.getElementById("output").innerHTML = object;
+        //document.getElementById("output").innerHTML = object;
     }
     
     // function(){
