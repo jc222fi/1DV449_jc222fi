@@ -13,21 +13,34 @@
 // });
 var ApiResponse = {
     init: function() {
-        $.ajax({
+        $.getJSON("http://api.sr.se/api/v2/traffic/messages?format=json&indent=true", function(data){
+            for(var i in data.messages) {
+                ApiResponse.handleResponse(data.messages[i]);
+            }
+        });
+        var map = L.map('map').setView([59.84631644520587, 17.720024407748333], 13);
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            maxZoom: 18,
+            id: 'johannalc.odj2kmj2',
+            accessToken: 'pk.eyJ1Ijoiam9oYW5uYWxjIiwiYSI6ImNpaTN0ajdlajAwM212d20zNnVkaDZpZGcifQ.pmFpfuFQx4f2kLoTusWy-w'
+        }).addTo(map);
+        /*$.ajax({
             type: 'GET',
-            url: "http://api.sr.se/api/v2/traffic/messages",
+            url: "http://api.sr.se/api/v2/traffic/messages?format=json&indent=true",
             dataType: "json",
             complete: function(data){
                 var parsedObj = JSON.parse(JSON.stringify(data));
-                var xmlData = parsedObj.responseText;
-                console.log(xmlData);
-                ApiResponse.handleResponse(xmlData);
-                /*var messages = $(xmlData).find("messages").each(function(i){
+                var jsonData = parsedObj.responseText;
+                //var newData = JSON.parse(jsonData.messages);
+                console.log(jsonData);
+                //ApiResponse.handleResponse(data);
+                /!*var messages = $(xmlData).find("messages").each(function(i){
                     titles[i] = $(this).find("title").text();
-                });*/
+                });*!/
                 //console.log(messages);
             }
-        });
+        });*/
 
 
 
@@ -56,22 +69,23 @@ var ApiResponse = {
     //xhttp.open("GET", url, true);
     //xhttp.send();
     },
-    handleResponse: function(xml){
+    handleResponse: function(data){
 
-        $(xml).find('message').each(function(){
+        /*$(xml).find('message').each(function(){
             //var $messages = $(this);
             var $message = $(this);
             var title = $message.children('title');
             var priority = $message.attr('priority');
             var subCategory = $message.children('subcategory');
-            var description = $message.children('description');
-            console.log(title);
+            var description = $message.children('description');*/
+            //var title = data.title;
+            console.log(data);
 
-            var html = '<h3>' + title.text() + '</h3>       <p>' + priority + ' ' + subCategory.text() + '</p><p>' + description.text() + '</p>';
-            //html += '';
+            var html = '<h3>' + data.title + '</h3>       <p>' + data.priority + ' ' + data.subcategory + '</p><p>' + data.description + '</p>';
+            html += '';
 
             $('#output').append(html);
-        });
+        //});
         // var i;
         // var object = "";
         // for(i = 0; i < array.length; i++) {
