@@ -3,8 +3,18 @@
     height: 700px;
     width: 700px;
 }
+#options {
+    float: left;
+    margin-left: 30px;
+}
 #output {
     float: left;
     margin-left: 30px;
     width: 350px;
+}
+th{
+    align-content: flex-start;
+}
+.goldfish {
+    display: none;
 }

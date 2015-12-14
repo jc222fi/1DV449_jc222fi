@@ -10,8 +10,21 @@
     <body>
         <h1>Min fräscha trafikinformation</h1>
         <div id="map"></div>
-        <div id="output">
+        <div id="options">
+            <button type="button" id="all">Alla</button>
+            <button type="button" id="traffic">Vägtrafik</button>
+            <button type="button" id="public">Kollektivtrafik</button>
+            <button type="button" id="planned">Planerad störning</button>
+            <button type="button" id="other">Övrigt</button>
         </div>
+        <table id="output">
+            <tr>
+                <th>Prioritet</th>
+                <th>Kategori</th>
+                <th>Titel</th>
+                <th>Datum</th>
+            </tr>
+        </table>
         <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
         <script src="JavaScript/myScript.js"></script>
     </body>

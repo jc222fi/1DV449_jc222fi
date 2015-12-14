@@ -9,26 +9,58 @@ var ApiResponse = {
             accessToken: 'pk.eyJ1Ijoiam9oYW5uYWxjIiwiYSI6ImNpaTN0ajdlajAwM212d20zNnVkaDZpZGcifQ.pmFpfuFQx4f2kLoTusWy-w'
         }).addTo(map);
 
-        $.getJSON("http://api.sr.se/api/v2/traffic/messages?format=json&indent=true", function(data){
+        $.getJSON("http://api.sr.se/api/v2/traffic/messages?format=json&size=50", function(data){
             for(var i in data.messages) {
-                ApiResponse.handleResponse(data.messages[i]);
+                ApiResponse.handleResponse(data.messages[i], map);
             }
+        });
+
+        $("#all").click(function(){
+            $("tr").removeClass("goldfish");
+        });
+        $("#traffic").click(function(){
+            $(".0").removeClass("goldfish");
+            $(".1").addClass("goldfish");
+            $(".2").addClass("goldfish");
+            $(".3").addClass("goldfish");
+        });
+        $("#public").click(function(){
+            $(".0").addClass("goldfish");
+            $(".1").removeClass("goldfish");
+            $(".2").addClass("goldfish");
+            $(".3").addClass("goldfish");
+        });
+        $("#planned").click(function(){
+            $(".0").addClass("goldfish");
+            $(".1").addClass("goldfish");
+            $(".2").removeClass("goldfish");
+            $(".3").addClass("goldfish");
+        });
+        $("#other").click(function(){
+            $(".0").addClass("goldfish");
+            $(".1").addClass("goldfish");
+            $(".2").addClass("goldfish");
+            $(".3").removeClass("goldfish");
         });
     },
     handleResponse: function(data, map){
-        console.log(data);
-        var date = parseInt(data.createddate.substr(6));
-        //date = date.replace(/[\/]/, "");
-        var dateFormat = new Date(date);
-        console.log(dateFormat);
+        var html;
+        var date;
 
-        var html = '<h3>' + data.title + '</h3><p>' + data.priority + ' ' + data.subcategory + date + '</p><p>' + data.description + '</p>';
+        date = parseInt(data.createddate.substr(6));
+        date = new Date(date);
+        date = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
+
+        ApiResponse.showDetails(data, map);
+
+        html = '<tr class="' + data.category + '"><td>' + data.priority + '</td><td>' + data.subcategory + '</td><td>' + data.title + '</td><td>' + date + '</td></tr>';
         html += '';
 
         $('#output').append(html);
     },
-    showOnMap: function (coordinates, map){
-
+    showDetails: function (data, map){
+        var marker = L.marker([data.latitude, data.longitude]).addTo(map);
+        marker.bindPopup("<h4>" + data.title + "</h4><p>" + data.description + "</p>");
     }
 };
 
