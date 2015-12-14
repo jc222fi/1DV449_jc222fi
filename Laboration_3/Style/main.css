@@ -1,1 +1,10 @@
-#map { height: 180px; }
+#map {
+    float: left;
+    height: 700px;
+    width: 700px;
+}
+#output {
+    float: left;
+    margin-left: 30px;
+    width: 350px;
+}
