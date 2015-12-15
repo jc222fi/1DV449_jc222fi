@@ -10,10 +10,36 @@
 #output {
     float: left;
     margin-left: 30px;
-    width: 350px;
+    width: 450px;
 }
-th{
-    align-content: flex-start;
+th {
+    text-align: left;
+}
+td:first-child {
+    text-align: center;
+}
+.priority-1 {
+    color: white;
+    background-color: #ff0000;
+}
+.priority-2 {
+    color: black;
+    background-color: #ff8000;
+}
+.priority-3 {
+    color: black;
+    background-color: #ffbf00;
+}
+.priority-4 {
+    color: black;
+    background-color: #ffff00;
+}
+.priority-5 {
+    color: black;
+    background-color: #bfff00;
+}
+.date {
+   width: 80px;
 }
 .goldfish {
     display: none;
