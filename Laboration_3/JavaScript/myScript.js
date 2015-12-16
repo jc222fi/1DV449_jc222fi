@@ -1,9 +1,26 @@
 "use strict";
 function ApiResponse(){
+
     var that = this;
-    this.allMessages = [];
+
+    this.map = {};
     this.marker = [];
 
+    var ApiUrl = "http://api.sr.se/api/v2/traffic/messages?format=json&size=50";
+
+    var startCheckingCache = function(){
+        window.setInterval(getData, 1000 * 60); // Check every minute
+        console.log("checked if cache is old");
+    };
+    var getMap = function(){
+        that.map = L.map('map').setView([63.045, 14.326], 5);
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            maxZoom: 18,
+            id: 'johannalc.odj2kmj2',
+            accessToken: 'pk.eyJ1Ijoiam9oYW5uYWxjIiwiYSI6ImNpaTN0ajdlajAwM212d20zNnVkaDZpZGcifQ.pmFpfuFQx4f2kLoTusWy-w'
+        }).addTo(that.map);
+    };
     var encodeTags = function(str){
         var lt = /</g,
             gt = />/g,
@@ -17,46 +34,62 @@ function ApiResponse(){
         }
     };
     var getData = function(){
+
         var messages;
-        var map;
+        // IF data is old or non existant
+        if(!lscache.get(ApiUrl))
+        {
+            $.getJSON(ApiUrl, function(data){
+                messages = that.parseDate(data.messages, true);
 
-        map = L.map('map').setView([63.045, 14.326], 5);
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-            maxZoom: 18,
-            id: 'johannalc.odj2kmj2',
-            accessToken: 'pk.eyJ1Ijoiam9oYW5uYWxjIiwiYSI6ImNpaTN0ajdlajAwM212d20zNnVkaDZpZGcifQ.pmFpfuFQx4f2kLoTusWy-w'
-        }).addTo(map);
+                //Sort messages based on dates, most recent one first, before saving them locally in messages
+                messages.sort(sortOnDate);
+                that.createMarkers(messages);
 
-        $.getJSON("http://api.sr.se/api/v2/traffic/messages?format=json&size=50", function(data){
-            for(var i in data.messages){
-                sanitizeInput(data.messages[i]);
-                var date = parseInt(data.messages[i].createddate.substr(6));
-                data.messages[i].createddate = new Date(date);
+                // Save in cache
+                lscache.set(ApiUrl, messages, 15);
+            });
+        }
+        // Data exists in cache
+        else
+        {
+            // Get from cache
+            var messages = lscache.get(ApiUrl);
+            messages = that.parseDate(messages, false);
+            that.createMarkers(messages);
+        }
+    };
+    this.parseDate = function(messages, parseSpecial) {
+        for(var i in messages){
+            sanitizeInput(messages[i]);
+            var date = messages[i].createddate;
+            if(parseSpecial) {
+                date = parseInt(date.substr(6));
             }
-            //Sort messages based on dates, most recent one first, before saving them locally in messages
-            messages = data.messages;
-            messages.sort(sortOnDate);
-
-            for(var i in data.messages) {
-                that.marker[i] = L.marker([data.messages[i].latitude, data.messages[i].longitude]).addTo(map);
-                handleApiResponse(data.messages[i], map, that.marker[i]);
-            }
-            lscache.set('data', messages, 10);
-            that.allMessages = messages;
-        });
+            messages[i].createddate = new Date(date);
+        }
+        return messages;
+    };
+    this.createMarkers = function(messages) {
+        that.marker = [];
+        for(var i in messages) {
+            that.marker[i] = L.marker([messages[i].latitude, messages[i].longitude]).addTo(that.map);
+            handleApiResponse(messages[i], that.map, that.marker[i]);
+        }
     };
     this.initialize = function() {
 
+        getMap();
         getData();
-        //console.log(getData());
-        console.log(that.allMessages);
+        startCheckingCache();
 
         $("#output").on("click", "tr", function(){
-            //console.log($(this).context.id);
-            for(var i in that.allMessages){
-                if(that.allMessages[i].id.toString() === $(this).context.id){
-                    showDetails(that.allMessages[i], that.marker[i]).openPopup();
+
+            var allMessages = lscache.get(ApiUrl);
+            that.parseDate(allMessages, false);
+            for(var i in allMessages){
+                if(allMessages[i].id.toString() === $(this).context.id){
+                    showDetails(allMessages[i], that.marker[i]).openPopup();
                 }
             }
         });
@@ -138,7 +171,7 @@ function ApiResponse(){
         return hours + ':' + minutes;
     };
     var showDetails = function(data, marker) {
-        return marker.bindPopup("<h4>" + data.title + "</h4><p>" + formatDate(data.createddate) + '\n' + formatTime(data.createddate) + '\n' + data.description + "</p>");
+        return marker.bindPopup("<h4>" + data.title + "</h4><p>" + formatDate(data.createddate) + ' ' + formatTime(data.createddate) + '<br />' + data.description + "</p>");
     };
 }
 

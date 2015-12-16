@@ -12,6 +12,13 @@
     margin-left: 30px;
     width: 450px;
 }
+h1 {
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+button {
+    color: white;
+    background-color: #ff9900;
+}
 th {
     text-align: left;
 }
