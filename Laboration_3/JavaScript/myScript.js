@@ -1,12 +1,24 @@
 "use strict";
 function ApiResponse(){
-    var allMessages = [];
-    var visibleMessages = [];
+    var that = this;
+    this.allMessages = [];
+    this.marker = [];
 
+    var encodeTags = function(str){
+        var lt = /</g,
+            gt = />/g,
+            ap = /'/g,
+            ic = /"/g;
+        return str.toString().replace(lt, "&lt;").replace(gt, "&gt;").replace(ap, "&#39;").replace(ic, "&#34;");
+    };
+    var sanitizeInput = function(object){
+        for(var i in object){
+            encodeTags(object[i].toString());
+        }
+    };
     var getData = function(){
         var messages;
         var map;
-        var marker = [];
 
         map = L.map('map').setView([63.045, 14.326], 5);
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -18,6 +30,7 @@ function ApiResponse(){
 
         $.getJSON("http://api.sr.se/api/v2/traffic/messages?format=json&size=50", function(data){
             for(var i in data.messages){
+                sanitizeInput(data.messages[i]);
                 var date = parseInt(data.messages[i].createddate.substr(6));
                 data.messages[i].createddate = new Date(date);
             }
@@ -26,22 +39,24 @@ function ApiResponse(){
             messages.sort(sortOnDate);
 
             for(var i in data.messages) {
-                marker[i] = L.marker([data.messages[i].latitude, data.messages[i].longitude]).addTo(map);
-                handleApiResponse(data.messages[i], map, marker[i]);
+                that.marker[i] = L.marker([data.messages[i].latitude, data.messages[i].longitude]).addTo(map);
+                handleApiResponse(data.messages[i], map, that.marker[i]);
             }
+            lscache.set('data', messages, 10);
+            that.allMessages = messages;
         });
-        allMessages = messages;
     };
     this.initialize = function() {
-        var marker = [];
 
         getData();
         //console.log(getData());
+        console.log(that.allMessages);
 
         $("#output").on("click", "tr", function(){
-            for(var i in allMessages){
-                if(allMessages[i].id.toString() === $(this).context.id){
-                    showDetails(allMessages[i], marker[i]).openPopup();
+            //console.log($(this).context.id);
+            for(var i in that.allMessages){
+                if(that.allMessages[i].id.toString() === $(this).context.id){
+                    showDetails(that.allMessages[i], that.marker[i]).openPopup();
                 }
             }
         });
