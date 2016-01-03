@@ -1,0 +1,5 @@
+{
+    "require": {
+        "corbanb/freebird-php": "^0.2.3"
+    }
+}
