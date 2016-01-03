@@ -1,5 +1,5 @@
 #Ignore these directories
-vendor
+Projekt/vendor
 
 # Windows image file caches
 Thumbs.db
