@@ -11,42 +11,48 @@ $tweets = $twitterObject->getArrayOfTweets($twitterObject->getResponse());
 $photoArray = $flickrObject->getPhotoArray($flickrObject->getResponse());
 $photoUrls = $flickrObject->buildPhotoUrls($photoArray);
 
-$flickrOutput ="";
-foreach($photoUrls as $url){
-    $flickrOutput .= createImageTag($url);
+$tweetCount = count($tweets);
+$photoCount = count($photoUrls);
+if($photoCount > $tweetCount){
+    $condition = $tweetCount;
 }
-$twitterOutput = "";
-foreach($tweets as $tweet){
-    $twitterOutput .= createTweetOutput($tweet);
+else{
+    $condition = $photoCount;
 }
-output($flickrOutput, $twitterOutput);
+
+$output = "";
+
+for ($i = 0; $i < $condition; $i++) {
+    $output .= "<div class='tweet'>" . createTweetOutput($tweets[$i]);
+    $output .= "<img src='" . $photoUrls[$i] . "' /></div>";
+}
+output($output);
 
 function createTweetOutput($tweet){
-    $profilePic = createImageTag($tweet['profileImageUrl']);
-    $name = "<h5 class='name'>" . $tweet['name'] . "</h5>";
-    $screenName = "<h5>@" . $tweet['screenName'] . "</h5>";
+    $profilePic = "<img class='profilePhoto' src='" . $tweet['profileImageUrl'] . "' />";
+    $name = "<h4 class='name'>" . $tweet['name'] . "</h4>";
+    $screenName = "<h4> @" . $tweet['screenName'] . "</h4>";
     $text = "<p>" . $tweet['text'] . "</p>";
-    return "<div class='tweet'>" . $profilePic . $name . $screenName . $text . "</div>";
+    return $profilePic . $name . $screenName . $text;
 }
-function createImageTag($photoUrl){
-    return "<img src='" . $photoUrl . "' />";
-}
-function output($flickrOutput, $twitterOutput){
+function output($output){
     echo "<!DOCTYPE html>
 <html>
     <head>
         <meta charset='utf-8'>
+        <link rel='stylesheet' href='../Style/Style.css' />
         <title>Project</title>
     </head>
-    <body>
-        <div class='form'>
-            <form method='post'>
-                    <input type='text' name='tag'>
-                    <input type='submit' value='Submit'>
-            </form>
+        <div class='container'>
+            <div class='header'><h1>twickrtags</h1></div>
+            <div class='form'>
+                <form method='post'>
+                        <input type='text' name='tag'>
+                        <input type='submit' value='Combine'>
+                </form>
+            </div>
+            <div class='main'>" . $output . "</div>
         </div>
-        <div class='flickr'>" . $flickrOutput . "</div>
-        <div class='twitter'>" . $twitterOutput . "</div>
     </body>
 </html>";
 }

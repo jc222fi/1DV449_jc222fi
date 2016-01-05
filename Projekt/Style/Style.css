@@ -1,0 +1,58 @@
+/*Overall layout*/
+.container{
+    border-radius: 25px;
+    width: 80%;
+    margin: 0 auto;
+    padding-bottom: 30px;
+}
+.header{
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    height: 100px;
+}
+.form{
+    width: 400px;
+    margin: auto;
+    padding: 20px;
+}
+.tweet{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+/*Background coloring
+Body:       #CCF4F1
+Header:     #6CC3BD
+Container:  #bdeae7
+Tweet:      #9CE0DB*/
+body{
+    background-color: #cddcf4;
+}
+.header{
+    background-color: #6baec2;
+}
+.container{
+    background-color: #bdeae7;
+}
+.tweet{
+    background-color: #9CE0DB;
+}
+/*More detailed appearance*/
+.tweet{
+    border-radius: 10px;
+    border-top: 2px solid #d4f2f0;
+    border-left: 2px solid #d4f2f0;
+    border-bottom: 2px solid #64cec7;
+    border-right: 2px solid #64cec7;
+    padding: 5px;
+}
+    h4{
+        margin-left: 2px;
+        display: inline;
+    }
+    .profilePhoto{
+        float: left;
+    }
+    p{
+        margin-top: 50px;
+    }

@@ -24,7 +24,7 @@ class Twitter{
             $tweet['profileImageUrl'] = $response['statuses'][$i]['user']['profile_image_url_https'];
             //$tweet['createdAt'] = $response['statuses'][$i]['created_at'];
             $tweet['text'] = $response['statuses'][$i]['text'];
-            $statuses['tweetNumber' . $i] = $tweet;
+            $statuses[$i] = $tweet;
         }
         return $statuses;
     }
