@@ -44,7 +44,7 @@ function output($output){
         <title>Project</title>
     </head>
         <div class='container'>
-            <div class='header'><h1>twickrtags</h1></div>
+            <div class='header'><h1></h1></div>
             <div class='form'>
                 <form method='post'>
                         <input type='text' name='tag'>

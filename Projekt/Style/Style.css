@@ -8,7 +8,7 @@
 .header{
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
-    height: 100px;
+    height: 120px;
 }
 .form{
     width: 400px;
@@ -29,21 +29,32 @@ body{
     background-color: #cddcf4;
 }
 .header{
-    background-color: #6baec2;
+    background: #6baec2 url("../Images/twickrtags_text.png") no-repeat center;
+    background-size: 50%;
+}
+input{
+    height: 25px;
+    border-radius: 5px;
+}
+.search-field {
+    width: 200px;
+}
+.image-button{
 }
 .container{
     background-color: #bdeae7;
 }
 .tweet{
-    background-color: #9CE0DB;
+    background-color: #e4f6ff;
 }
 /*More detailed appearance*/
 .tweet{
+    background: #e4f6ff url("../Images/twickrtags_button.png") no-repeat right;
     border-radius: 10px;
-    border-top: 2px solid #d4f2f0;
-    border-left: 2px solid #d4f2f0;
-    border-bottom: 2px solid #64cec7;
-    border-right: 2px solid #64cec7;
+    border-top: 2px solid white;
+    border-left: 2px solid white;
+    border-bottom: 2px solid #a5b2b8;
+    border-right: 2px solid #a5b2b8;
     padding: 5px;
 }
     h4{
