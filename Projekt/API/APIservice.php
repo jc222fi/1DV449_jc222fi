@@ -1,9 +1,13 @@
 <?php
 require_once("flickr.php");
 require_once("twitter.php");
+require_once("klAPI.php");
 
 $tag = $_POST['tag'];
 $formattedTag = preg_replace('/\W/', '', $tag);
+
+$apiKey = "O2BMP4MhIx9mPQ5pif1TIdOQtNnDYm6eY9h553MaGAE8m2yXembaFP";
+$klApi = new KLAPI("johnnypesola", "O2BMP4MhIx9mPQ5pif1TIdOQtNnDYm6eY9h553MaGAE8m2yXembaFP", "https://klws.keylemon.com");
 $flickrObject = new Flickr($formattedTag);
 $twitterObject = new Twitter($formattedTag);
 
@@ -21,12 +25,16 @@ else{
 }
 
 $output = "";
+$imagesUrlFaceDetection = Array();
 
 for ($i = 0; $i < $condition; $i++) {
     $output .= "<div class='tweet'>" . createTweetOutput($tweets[$i]);
-    $output .= "<img src='" . $photoUrls[$i] . "' /></div>";
+    $output .= "<div class='containerphoto'><img src='" . $photoUrls[$i] . "' /><img class='pirate hidden' src='../Images/sprite_sheet.png' ></div>";
+    array_push($imagesUrlFaceDetection, $photoUrls[$i]);
 }
 output($output);
+$faceDetection = $klApi->detect_faces($imagesUrlFaceDetection);
+var_dump($faceDetection);
 
 function createTweetOutput($tweet){
     $profilePic = "<img class='profilePhoto' src='" . $tweet['profileImageUrl'] . "' />";

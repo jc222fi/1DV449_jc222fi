@@ -5,7 +5,7 @@ class Flickr{
     private $apiUrl;
 
     public function __construct($tag){
-        $this->apiUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" . $this->apiKey . "&tags=" . $tag . "&format=json&nojsoncallback=1";
+        $this->apiUrl = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=" . $this->apiKey . "&tags=" . $tag . "&sort=interestingness-desc&format=json&nojsoncallback=1";
     }
     public function getResponse(){
         return json_decode(file_get_contents($this->apiUrl), true);

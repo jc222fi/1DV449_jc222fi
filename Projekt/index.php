@@ -11,7 +11,7 @@
             <div class='form'>
                 <form method='post' action='API/APIservice.php'>
                         <input class='search-field' type='text' name='tag'>
-                        <input type='button' value='Combine'>
+                        <input type='submit' value='Combine'>
                 </form>
             </div>
         </div>
