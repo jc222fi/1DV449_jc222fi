@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,5 +18,7 @@
                 </form>
             </div>
         </div>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="/jQuery/PirateMode.js"></script>
     </body>
 </html>

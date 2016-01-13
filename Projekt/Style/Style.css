@@ -68,12 +68,10 @@ input{
         margin-top: 50px;
     }
     .containerphoto{
-        float: left;
+        display: inline-block;
         position: relative;
     }
-    .pirate{
-        width: 40%;
-        position:absolute;
-        top: 0;
-        left: 0;
+    #pirateButton{
+        width: 70px;
+        height: 70px;
     }
