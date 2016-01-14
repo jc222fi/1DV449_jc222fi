@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c1b2745a9255f2c9eea1be902babc752",
-    "content-hash": "b226a4f1cc11a320092d7117980d3074",
+    "hash": "f0387a6f0979a10a4ab4cca68fa32ca9",
+    "content-hash": "2c3304c591ec1dcf6a456a488707823b",
     "packages": [
         {
             "name": "corbanb/freebird-php",
@@ -58,6 +58,51 @@
                 "twitter"
             ],
             "time": "2015-02-28 18:40:54"
+        },
+        {
+            "name": "cosenary/simple-php-cache",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cosenary/Simple-PHP-Cache.git",
+                "reference": "39607c9307b32248bae2fd6a945183c7249156da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cosenary/Simple-PHP-Cache/zipball/39607c9307b32248bae2fd6a945183c7249156da",
+                "reference": "39607c9307b32248bae2fd6a945183c7249156da",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "."
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Metz",
+                    "email": "christian-metz1@gmx.net",
+                    "homepage": "http://metzweb.net"
+                }
+            ],
+            "description": "A light, simple but powerful PHP5 Cache Class which uses the filesystem for caching.",
+            "homepage": "https://github.com/cosenary/Simple-PHP-Cache",
+            "keywords": [
+                "Simple",
+                "cache",
+                "filesystem",
+                "json"
+            ],
+            "time": "2015-01-03 18:28:23"
         },
         {
             "name": "guzzle/guzzle",
@@ -215,7 +260,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "cosenary/simple-php-cache": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

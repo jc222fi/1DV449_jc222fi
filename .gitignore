@@ -1,6 +1,9 @@
 #Ignore these directories
 Projekt/vendor
 
+#Ignore these files
+Projekt/settings.php
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
