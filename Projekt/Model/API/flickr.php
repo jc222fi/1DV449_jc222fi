@@ -8,7 +8,7 @@ class Flickr{
     private $apiUrl;
 
     public function __construct($tag){
-        $this->apiUrl = $this->apiEntryPoint . $this->apiKey . "&tags=" . $tag . "&sort=interestingness-desc&format=json&nojsoncallback=1";
+        $this->apiUrl = $this->apiEntryPoint . $this->apiKey . "&tags=" . $tag . "&sort=interestingness-desc&per_page=20&page=1&format=json&nojsoncallback=1";
     }
     public function getResponse(){
         return json_decode(file_get_contents($this->apiUrl), true);

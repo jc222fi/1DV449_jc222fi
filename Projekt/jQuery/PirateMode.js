@@ -26,7 +26,7 @@ function PirateMode(){
         var newImg1;
         for(i=0;i<containerDivs.length;i++){
             img = containerDivs[i].firstChild;
-            if(img.getAttribute("id") === faceDetection[i].face_id){
+            if(img.getAttribute("id") === faceDetection[i].face_id && faceDetection[i].face_id !== "nothing"){
                 //Add new image containing eye patch, has to be in the same div as original image to work
                 newImg1 = document.createElement("img");
                 newImg1.setAttribute("src", "../project/Images/Pirate_eye_patch.png");
