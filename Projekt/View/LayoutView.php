@@ -10,8 +10,25 @@ class LayoutView {
             <html>
                 <head>
                     <meta charset='utf-8'>
+                    <link rel='apple-touch-icon' sizes='57x57' href='Images/apple-icon-57x57.png'>
+                    <link rel='apple-touch-icon' sizes='60x60' href='Images/apple-icon-60x60.png'>
+                    <link rel='apple-touch-icon' sizes='72x72' href='Images/apple-icon-72x72.png'>
+                    <link rel='apple-touch-icon' sizes='76x76' href='Images/apple-icon-76x76.png'>
+                    <link rel='apple-touch-icon' sizes='114x114' href='Images/apple-icon-114x114.png'>
+                    <link rel='apple-touch-icon' sizes='120x120' href='Images/apple-icon-120x120.png'>
+                    <link rel='apple-touch-icon' sizes='144x144' href='Images/apple-icon-144x144.png'>
+                    <link rel='apple-touch-icon' sizes='152x152' href='Images/apple-icon-152x152.png'>
+                    <link rel='apple-touch-icon' sizes='180x180' href='Images/apple-icon-180x180.png'>
+                    <link rel='icon' type='image/png' sizes='192x192'  href='Images/android-icon-192x192.png'>
+                    <link rel='icon' type='image/png' sizes='32x32' href='Images/favicon-32x32.png'>
+                    <link rel='icon' type='image/png' sizes='96x96' href='Images/favicon-96x96.png'>
+                    <link rel='icon' type='image/png' sizes='16x16' href='Images/favicon-16x16.png'>
+                    <link rel='manifest' href='Images/manifest.json'>
+                    <meta name='msapplication-TileColor' content='#ffffff'>
+                    <meta name='msapplication-TileImage' content='Images/ms-icon-144x144.png'>
+                    <meta name='theme-color' content='#ffffff'>
                     <link href='//fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-                    <link rel='stylesheet' href='/Johanna/webbteknik/twickrtags/Style/Style.css' />
+                    <link rel='stylesheet' href='Style/Style.css' />
                     <title>Project</title>
                 </head>
                 <body>
@@ -30,7 +47,7 @@ class LayoutView {
                         </div>
                     </div>
                     <script src='//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
-                    <script src='/Johanna/webbteknik/twickrtags/jQuery/PirateMode.js'></script>
+                    <script src='javascript/PirateMode.min.js'></script>
                 </body>
             </html>";
     }

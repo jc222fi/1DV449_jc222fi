@@ -20,7 +20,7 @@ class CombinationView {
     public function errorMessage(){
         return "<p>Unfortunately an error has occured with one of the web services that are used to put together this website. Please try again later.</p>";
     }
-    public function getOutput(Array $tweets, Array $photoUrls, Array $cachedFaces, \model\KLAPI $klApi = null){
+    public function getOutput(Array $tweets, Array $photoUrls, $cachedFaces, \model\KLAPI $klApi = null){
         $output = "";
         //Check for content, if there are no tweets och photos to process we return an empty string
         if($tweets != null && $photoUrls != null){
@@ -34,10 +34,20 @@ class CombinationView {
                     $faceDetection = $cachedFaces[$i];
                 }
                 else{
-                    $res = $klApi->detect_faces(array($currentUrl));//
-                    $faceDet = get_object_vars($res);               //The response is returned as an stdClass and not an
-                    $object = $faceDet["faces"][0];                 //array, so we need to convert it to an array to be
-                    $faceDetection = get_object_vars($object);      //able to work with it
+                    $res = $klApi->detect_faces(array($currentUrl));
+                    if ($res != null) {
+                        $faceDet = get_object_vars($res);
+                        if($faceDet != null) {                              //The response is returned as an stdClass and not an
+                            $object = $faceDet["faces"][0];                 //array, so we need to convert it to an array to be
+                            $faceDetection = get_object_vars($object);      //able to work with it
+                        }
+                        else{
+                            continue;
+                        }
+                    }
+                    else{
+                        $faceDetection = null;
+                    }
                 }
                 $output .= "<div class='tweet'>" . $this->createTweetOutput($tweets[$i]);
                 $output .= "<div class='containerphoto'><img id='" . $faceDetection["face_id"] . "' src='" . $currentUrl . "' /></div></div>";
@@ -59,7 +69,7 @@ class CombinationView {
         return $output;
     }
     public function getPirateButton(){
-        return "<input id='pirateButton' type='image' src='../twickrtags/Images/Pirate_button.jpg' alt='Pirate mode'>";
+        return "<input id='pirateButton' type='image' src='Images/Pirate_button.jpg' alt='Pirate mode'>";
     }
     private function setCondition($tweetCount, $flickrCount){
         if($flickrCount > $tweetCount){

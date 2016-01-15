@@ -2,7 +2,7 @@
 
 namespace model;
 
-require_once("/vendor/autoload.php");
+require_once("vendor/autoload.php");
 class Twitter{
     private $apiKey = \Settings::TWITTER_KEY;
     private $apiSecret = \Settings::TWITTER_SECRET;

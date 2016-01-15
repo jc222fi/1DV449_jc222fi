@@ -15,9 +15,10 @@
     margin: auto;
     padding: 30px;
 }
+.main{
+    padding:10px;
+}
 .tweet{
-    margin-left: 10px;
-    margin-right: 10px;
     margin-bottom: 10px;
 }
 /*Background coloring
@@ -87,4 +88,13 @@ input{
             margin-right: 38%;
             width: 70px;
             height: 70px;
+        }
+        #noFaces{
+            background: #ffaeab;
+            border-radius: 10px;
+            border-top: 2px solid #ffe2dd;
+            border-left: 2px solid #ffe2dd;
+            border-bottom: 2px solid #d57875;
+            border-right: 2px solid #d57875;
+            padding: 15px;
         }

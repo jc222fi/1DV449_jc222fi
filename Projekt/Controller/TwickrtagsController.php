@@ -3,10 +3,10 @@
 namespace controller;
 
 //Set dependencies
-require_once("view/LayoutView.php");
-require_once("view/CombinationView.php");
+require_once("View/LayoutView.php");
+require_once("View/CombinationView.php");
 
-require_once("model/APIservice.php");
+require_once("Model/API/APIservice.php");
 
 class TwickrtagsController {
     private $layoutView;
@@ -20,6 +20,7 @@ class TwickrtagsController {
     }
     public function doApp(){
         $tag = $this->combinationView->getProvidedTag();
+        $this->cacheObj->eraseExpired();
         if ($this->layoutView->userWantsToSearch()) {
             //Set up my models if the user clicks "combine"
             $apiService = new \model\APIService($tag);
@@ -43,7 +44,7 @@ class TwickrtagsController {
             else{
                 $twitter = $apiService->getTwitterObj();
                 $tweets = $twitter->getArrayOfTweets($twitter->getResponse());
-                $this->cacheObj->store("tweets" . $tag, $tweets, 1800000); //Cache tweets for 30 min
+                $this->cacheObj->store("tweets" . $tag, $tweets, 900000); //Cache tweets for 15 min
             }
             //The actual request for keylemon is made in the view, therefore the keylemon object will always be retrieved here
             $keylemon = $apiService->getKeylemonObj();
@@ -53,6 +54,7 @@ class TwickrtagsController {
                 $this->layoutView->renderLayout($this->combinationView->errorMessage(), "");
             }
             else {
+
                 $this->cacheObj->setCache("faces"); //Access correct cache file for faces that will be dealt with in the view
                 $this->layoutView->renderLayout($this->combinationView->getOutput($tweets, $photoUrls, $cachedFaces, $keylemon), $this->combinationView->getPirateButton());
             }
