@@ -13,7 +13,7 @@
 .form{
     width: 400px;
     margin: auto;
-    padding: 20px;
+    padding: 30px;
 }
 .tweet{
     margin-left: 10px;
@@ -21,10 +21,11 @@
     margin-bottom: 10px;
 }
 /*Background coloring
-Body:       #CCF4F1
-Header:     #6CC3BD
+Body:       #cddcf4
+Header:     #6baec2
 Container:  #bdeae7
-Tweet:      #9CE0DB*/
+Tweet:      #e4f6ff*/
+
 body{
     background-color: #cddcf4;
 }
@@ -44,34 +45,46 @@ input{
 .container{
     background-color: #bdeae7;
 }
-.tweet{
-    background-color: #e4f6ff;
-}
-/*More detailed appearance*/
-.tweet{
-    background: #e4f6ff url("../Images/twickrtags_button.png") no-repeat right;
-    border-radius: 10px;
-    border-top: 2px solid white;
-    border-left: 2px solid white;
-    border-bottom: 2px solid #a5b2b8;
-    border-right: 2px solid #a5b2b8;
-    padding: 15px;
-}
-    h4{
-        margin-left: 2px;
-        display: inline;
+    .introduction{
+        padding: 1%;
+        width: 80%;
+        margin: 2% auto auto;
+        background-color: #e4f6ff;
+        border-radius: 10px;
+        border-top: 2px solid white;
+        border-left: 2px solid white;
+        border-bottom: 2px solid #a5b2b8;
+        border-right: 2px solid #a5b2b8;
+        font-family: 'Montserrat', sans-serif;
+        font-size: large;
     }
-    .profilePhoto{
-        float: left;
+    .tweet{
+        background: #e4f6ff url("../Images/twickrtags_button.png") no-repeat right;
+        border-radius: 10px;
+        border-top: 2px solid white;
+        border-left: 2px solid white;
+        border-bottom: 2px solid #a5b2b8;
+        border-right: 2px solid #a5b2b8;
+        padding: 15px;
     }
-    p{
-        margin-top: 50px;
-    }
-    .containerphoto{
-        display: inline-block;
-        position: relative;
-    }
-    #pirateButton{
-        width: 70px;
-        height: 70px;
-    }
+        h4{
+            margin-left: 2px;
+            display: inline;
+        }
+        .profilePhoto{
+            float: left;
+        }
+        p{
+            margin-top: 50px;
+        }
+        .containerphoto{
+            display: inline-block;
+            position: relative;
+        }
+        #pirateButton{
+            float: right;
+            margin-top: 1%;
+            margin-right: 38%;
+            width: 70px;
+            height: 70px;
+        }

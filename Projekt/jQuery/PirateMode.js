@@ -4,7 +4,7 @@ function PirateMode(){
     var clicks = 0;
     this.initialize = function(){
         //Get the data containing json array with the detected faces
-        $.get( "/php_kurs/project/Model/API/RESTapi_typ.php",{getMyFaces:true}, function( data ) {
+        $.get( "../twickrtags/Model/API/RESTapi_typ.php",{getMyFaces:true}, function( data ) {
             //If you click the pirate button an eye patch and a hat will be added to the images where a face has been detected
             $("#pirateButton").on("click", function(){
                 if(clicks === 0) {
@@ -29,7 +29,7 @@ function PirateMode(){
             if(img.getAttribute("id") === faceDetection[i].face_id && faceDetection[i].face_id !== "nothing"){
                 //Add new image containing eye patch, has to be in the same div as original image to work
                 newImg1 = document.createElement("img");
-                newImg1.setAttribute("src", "../project/Images/Pirate_eye_patch.png");
+                newImg1.setAttribute("src", "../twickrtags/Images/Pirate_eye_patch.png");
                 newImg1.setAttribute("class", "pirate");
                 containerDivs[i].appendChild(newImg1);
 
@@ -41,7 +41,7 @@ function PirateMode(){
 
                 //Add new image containing hat, same procedure
                 newImg = document.createElement("img");
-                newImg.setAttribute("src", "../project/Images/Pirate_hat.png");
+                newImg.setAttribute("src", "../twickrtags/Images/Pirate_hat.png");
                 newImg.setAttribute("class", "pirate");
                 containerDivs[i].appendChild(newImg);
                 newImg.style.width = (faceDetection[i].w * 2.2) + "px";

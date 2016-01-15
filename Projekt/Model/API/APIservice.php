@@ -5,7 +5,6 @@ namespace model;
 require_once("flickr.php");
 require_once("twitter.php");
 require_once("klAPI.php");
-require_once("settings.php");
 class APIService {
     private $flickrObj;
     private $twitterObj;

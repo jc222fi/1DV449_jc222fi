@@ -11,7 +11,7 @@ class Twitter{
     public function __construct($tag){
         $client = new \Freebird\Services\freebird\Client();
         $client->init_bearer_token($this->apiKey, $this->apiSecret);
-        $requestToSend = 'search/tweets.json?q=%23' . $tag . '&lang=en&src=typd';
+        $requestToSend = 'search/tweets.json?q=%23' . $tag . '&lang=en&result_type=recent&src=typd';
         $this->response = json_decode($client->api_request($requestToSend, array('count' => 15)), true);
     }
     public function getResponse(){
@@ -28,8 +28,5 @@ class Twitter{
             $statuses[$i] = $tweet;
         }
         return $statuses;
-    }
-    public function getTweetCount(){
-        return count($this->response['statuses']);
     }
 }

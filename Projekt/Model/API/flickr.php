@@ -28,7 +28,4 @@ class Flickr{
         }
         return $photoUrls;
     }
-    public function getPhotoCount(){
-        return count($this->getPhotoArray($this->getResponse()));
-    }
 }
