@@ -6,6 +6,8 @@
 * [Cross-Site Request Forgery (CSRF)](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#cross-site-request-forgery-csrf)  
 
 ### Prestandaproblem 
+* [HTTP Cache-Headers](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#http-cache-headers)
+* [Komprimering av statiska filer](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#komprimering-av-statiska-filer)
 * [Inlänkning](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#inlänkning)
 * [Inline](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#inline)
 * [Egna övergripande reflektioner](https://github.com/jc222fi/1DV449_jc222fi/blob/master/LabbyMezzage.md#egna-övergripande-reflektioner)
