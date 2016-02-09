@@ -35,19 +35,13 @@ class CombinationView {
                 }
                 else{
                     $res = $klApi->detect_faces(array($currentUrl));
-                    if ($res != null) {
-                        $faceDet = get_object_vars($res);
-                        if($faceDet != null) {                              //The response is returned as an stdClass and not an
-                            $object = $faceDet["faces"][0];                 //array, so we need to convert it to an array to be
-                            $faceDetection = get_object_vars($object);      //able to work with it
-                        }
-                        else{
-                            continue;
-                        }
-                    }
-                    else{
-                        $faceDetection = null;
-                    }
+                    $faceDet = get_object_vars($res);               //The response is returned as an stdClass and not an
+                    if (count($faceDet["faces"]) !== 0) {
+                        $object = $faceDet["faces"][0];                 //array, so we need to convert it to an array to be
+                        $faceDetection = get_object_vars($object);
+                    } else {
+                        $faceDetection["face_id"] = null;
+                    }      //able to work with it
                 }
                 $output .= "<div class='tweet'>" . $this->createTweetOutput($tweets[$i]);
                 $output .= "<div class='containerphoto'><img id='" . $faceDetection["face_id"] . "' src='" . $currentUrl . "' /></div></div>";
