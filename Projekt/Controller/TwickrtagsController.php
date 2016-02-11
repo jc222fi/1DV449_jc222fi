@@ -54,7 +54,6 @@ class TwickrtagsController {
                 $this->layoutView->renderLayout($this->combinationView->errorMessage(), "");
             }
             else {
-
                 $this->cacheObj->setCache("faces"); //Access correct cache file for faces that will be dealt with in the view
                 $this->layoutView->renderLayout($this->combinationView->getOutput($tweets, $photoUrls, $cachedFaces, $keylemon), $this->combinationView->getPirateButton());
             }

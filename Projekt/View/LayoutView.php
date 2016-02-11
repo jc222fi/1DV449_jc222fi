@@ -29,6 +29,7 @@ class LayoutView {
                     <meta name='theme-color' content='#ffffff'>
                     <link href='//fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
                     <link rel='stylesheet' href='Style/Style.css' />
+                    <script src='javascript/Offline.js'></script>
                     <title>Project</title>
                 </head>
                 <body>
@@ -39,13 +40,27 @@ class LayoutView {
                         <div class='form'>
                             <form method='get'>
                                     <input class='search-field' type='text' name='" . self::$search . "'>
-                                    <input type='submit' value='Combine' >
+                                    <input id='combine' type='submit' value='Combine' >
                             </form>
                         </div>
                         <div class='main'>
                         " . $output . "
                         </div>
                     </div>
+                    <script>
+                        var run = function(){
+                            if(Offline.state === 'up'){
+                                Offline.check();
+                                $('#combine').removeAttr('disabled');
+                                $('#combine').attr('value', 'Combine');
+                            }
+                            else{
+                                $('#combine').attr('disabled', 'disabled');
+                                $('#combine').attr('value', 'Lost connection');
+                            }
+                        };
+                        setInterval(run, 5000);
+                    </script>
                     <script src='//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
                     <script src='javascript/PirateMode.min.js'></script>
                 </body>
