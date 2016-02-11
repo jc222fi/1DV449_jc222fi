@@ -3,7 +3,7 @@ När det var dags för att göra en mashup och få med alla kunskaper vi har lä
 Efter att ha gjort klart det mesta av grundfunktionaliteten mot Twitter och Flickr kändes den dock lite tunn och tråkig, så jag lade till en lite mer komisk funktion som man kan använda efter att en sökning har gjorts. Om det finns ansikten i bilderna kan man trycka på piratknappen för att få fram en pirathatt och en ögonlapp som positionerar sig i proportion till ansiktet som upptäckts i bilderna.
 
 ### Schematisk bild över Twickrtags
-* [Schemat hittar du här](https://drive.google.com/a/student.lnu.se/file/d/0B_ZzfQFknpytbEYzSXE5U1ljekU/view?usp=sharing)
+* [Schemat hittar du här](https://drive.google.com/file/d/0B_ZzfQFknpytbEYzSXE5U1ljekU/view?usp=sharing)
 
 ### Säkerhet och prestandaoptimering
 Twickrtags är en applikation som är ganska krävande vid första sökningen på en hashtag som ingen sökt på tidigare. För att göra det möjligt att lägga till piratdetaljerna måste API:et som används för ansiktsidentifiering anropas för varje bild som används från Flickr, och det är det inte riktigt anpassat för. Därför försöker jag cachea så mycket resurser som möjligt så länge som möjligt, och eftersom jag har märkt att innehållet från Flickr inte ändras så ofta har jag valt att spara det svaret från Flickr så länge som möjligt. Eftersom bilderna är kopplade till ansiktsidentifieringen sparar jag dessa två resurser lika länge, 1 timme för att vara exakt. Tweets från Twitter är mycket mer föränderliga, dessa resurser sparas endast i 15 minuter. Det är inte avgörande för applikationens funktionalitet att tweetsen är färskare än så.
